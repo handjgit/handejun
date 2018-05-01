@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jeeplus.modules.platform.dao.TuserDao">
+    
+	<sql id="tuserColumns">
+		a.id AS "id",
+		a.name AS "name",
+		a.password AS "password",
+		a.phone AS "phone",
+		a.status AS "status",
+		a.type AS "type",
+		a.emp_count AS "empCount",
+		a.emped_count AS "empedCount",
+		a.score AS "score",
+		a.website AS "website",
+		a.serv_qq AS "servQQ",
+		a.pub_count AS "pubCount",
+		a.photo AS "photo"
+	</sql>
+	
+	<sql id="tuserJoins">
+	</sql>
+	
+    
+	<select id="get" resultType="Tuser" >
+		SELECT 
+			<include refid="tuserColumns"/>
+		FROM t_user a
+		<include refid="tuserJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="Tuser" >
+		SELECT 
+			<include refid="tuserColumns"/>
+		FROM t_user a
+		<include refid="tuserJoins"/>
+		<where>
+			
+			<if test="id != null and id != ''">
+				AND a.id = #{id}
+			</if>
+			<if test="name != null and name != ''">
+				AND a.name LIKE 
+					<if test="dbName == 'oracle'">'%'||#{name}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{name}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{name},'%')</if>
+			</if>
+			<if test="status != null and status != ''">
+				AND a.status = #{status}
+			</if>
+			<if test="type != null and type != ''">
+				AND a.type = #{type}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="Tuser" >
+		SELECT 
+			<include refid="tuserColumns"/>
+		FROM t_user a
+		<include refid="tuserJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO t_user(
+			id,
+			name,
+			password,
+			phone,
+			status,
+			type,
+			emp_count,
+			emped_count,
+			score,
+			website,
+			serv_qq,
+			pub_count,
+			photo
+		) VALUES (
+			#{id},
+			#{name},
+			#{password},
+			#{phone},
+			#{status},
+			#{type},
+			#{empCount},
+			#{empedCount},
+			#{score},
+			#{website},
+			#{servQQ},
+			#{pubCount},
+			#{photo}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE t_user SET 	
+			phone = #{phone},
+			status = #{status},
+			type = #{type},
+			emped_count = #{empedCount},
+			score = #{score},
+			website = #{website},
+			serv_qq = #{servQQ},
+			pub_count = #{pubCount},
+			photo = #{photo}
+		WHERE id = #{id}
+	</update>
+	
+	
+	<!--物理删除-->
+	<update id="delete">
+		DELETE FROM t_user
+		WHERE id = #{id}
+	</update>
+	
+	<!--逻辑删除-->
+	<update id="deleteByLogic">
+		UPDATE t_user SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+	
+	<!-- 根据实体名称和字段名称和字段值获取唯一记录 -->
+	<select id="findUniqueByProperty" resultType="Tuser" statementType="STATEMENT">
+		select * FROM t_user  where ${propertyName} = '${value}'
+	</select>
+	
+</mapper>

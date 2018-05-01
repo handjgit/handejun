@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jeeplus.modules.platform.dao.StudentCommentDao">
+    
+	<sql id="studentCommentColumns">
+		a.id AS "id",
+		a.stu_id AS "stuId",
+		a.sel_id AS "selId",
+		a.score AS "score",
+		a.comment AS "comment",
+		a.status AS "status"
+	</sql>
+	
+	<sql id="studentCommentJoins">
+	</sql>
+	
+    
+	<select id="get" resultType="StudentComment" >
+		SELECT 
+			<include refid="studentCommentColumns"/>
+		FROM student_comment a
+		<include refid="studentCommentJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="StudentComment" >
+		SELECT 
+			<include refid="studentCommentColumns"/>
+		FROM student_comment a
+		<include refid="studentCommentJoins"/>
+		<where>
+			
+			<if test="stuId != null and stuId != ''">
+				AND a.stu_id = #{stuId}
+			</if>
+			<if test="selId != null and selId != ''">
+				AND a.sel_id = #{selId}
+			</if>
+			<if test="score != null and score != ''">
+				AND a.score = #{score}
+			</if>
+			<if test="status != null and status != ''">
+				AND a.status = #{status}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="StudentComment" >
+		SELECT 
+			<include refid="studentCommentColumns"/>
+		FROM student_comment a
+		<include refid="studentCommentJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO student_comment(
+			id,
+			stu_id,
+			sel_id,
+			score,
+			comment,
+			status
+		) VALUES (
+			#{id},
+			#{stuId},
+			#{selId},
+			#{score},
+			#{comment},
+			#{status}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE student_comment SET 	
+			score = #{score},
+			comment = #{comment},
+			status = #{status}
+		WHERE id = #{id}
+	</update>
+	
+	
+	<!--物理删除-->
+	<update id="delete">
+		DELETE FROM student_comment
+		WHERE id = #{id}
+	</update>
+	
+	<!--逻辑删除-->
+	<update id="deleteByLogic">
+		UPDATE student_comment SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+	
+	<!-- 根据实体名称和字段名称和字段值获取唯一记录 -->
+	<select id="findUniqueByProperty" resultType="StudentComment" statementType="STATEMENT">
+		select * FROM student_comment  where ${propertyName} = '${value}'
+	</select>
+	
+</mapper>
