@@ -86,7 +86,26 @@ public class TuserController extends BaseController {
 		model.addAttribute("tuser", tuser);
 		return "modules/platform/tuserForm";
 	}
-
+	
+	/**
+	 * 查看，增加，编辑员工信息表单页面
+	 */
+	@RequestMapping(value = "studentForm")
+	public String studentForm(Tuser tuser, Model model) {
+		tuser = tuserService.get(tuser);
+		model.addAttribute("tuser", tuser);
+		return "modules/platform/studentForm";
+	}
+	
+	/**
+	 * 查看，增加，编辑员工信息表单页面
+	 */
+	@RequestMapping(value = "viewSeller")
+	public String viewSeller(Tuser tuser, Model model) {
+		model.addAttribute("tuser", tuser);
+		return "modules/platform/sellerForm";
+	}
+	
 	/**
 	 * 保存员工信息
 	 */

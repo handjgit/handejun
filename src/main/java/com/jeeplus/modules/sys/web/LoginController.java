@@ -44,6 +44,7 @@ import com.jeeplus.modules.platform.entity.Tjob;
 import com.jeeplus.modules.platform.entity.Tuser;
 import com.jeeplus.modules.platform.service.TjobService;
 import com.jeeplus.modules.platform.service.TuserService;
+import com.jeeplus.modules.sys.entity.User;
 import com.jeeplus.modules.sys.security.FormAuthenticationFilter;
 import com.jeeplus.modules.sys.security.SystemAuthorizingRealm.Principal;
 import com.jeeplus.modules.sys.utils.UserUtils;
@@ -174,7 +175,7 @@ public class LoginController extends BaseController{
 	 */
 	@RequiresPermissions("user")
 	@RequestMapping(value = "${adminPath}")
-	public String index(HttpServletRequest request, HttpServletResponse response) {
+	public String index(HttpServletRequest request, HttpServletResponse response,Model model) {
 		Principal principal = UserUtils.getPrincipal();
 		// 登录成功后，验证码计算器清零
 //		isValidateCodeLogin(principal.getLoginName(), false, true);
@@ -193,51 +194,7 @@ public class LoginController extends BaseController{
 				return "redirect:" + adminPath + "/login";
 			}
 		}
-		
-//		// 如果是手机登录，则返回JSON字符串
-//		if (principal.isMobileLogin()){
-//			if (request.getParameter("login") != null){
-//				return renderString(response, principal);
-//			}
-//			if (request.getParameter("index") != null){
-//				return "modules/sys/sysIndex";
-//			}
-//			return "redirect:" + adminPath + "/login";
-//		}
-		
-//		// 登录成功后，获取上次登录的当前站点ID
-//		UserUtils.putCache("siteId", StringUtils.toLong(CookieUtils.getCookie(request, "siteId")));
 
-//		System.out.println("==========================a");
-//		try {
-//			byte[] bytes = com.jeeplus.common.utils.FileUtils.readFileToByteArray(
-//					com.jeeplus.common.utils.FileUtils.getFile("c:\\sxt.dmp"));
-//			UserUtils.getSession().setAttribute("kkk", bytes);
-//			UserUtils.getSession().setAttribute("kkk2", bytes);
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-////		for (int i=0; i<1000000; i++){
-////			//UserUtils.getSession().setAttribute("a", "a");
-////			request.getSession().setAttribute("aaa", "aa");
-////		}
-//		System.out.println("==========================b");
-		//
-//		OaNotify oaNotify = new OaNotify();
-//		oaNotify.setSelf(true);
-//		oaNotify.setReadFlag("0");
-//		Page<OaNotify> page = oaNotifyService.find(new Page<OaNotify>(request, response), oaNotify); 
-//		request.setAttribute("page", page);
-//		request.setAttribute("count", page.getList().size());//未读通知条数
-		
-		
-		//
-//		MailBox mailBox = new MailBox();
-//		mailBox.setReceiver(UserUtils.getUser());
-//		mailBox.setReadstatus("0");//筛选未读
-//		Page<MailBox> mailPage = mailBoxService.findPage(new MailPage<MailBox>(request, response), mailBox); 
-//		request.setAttribute("noReadCount", mailBoxService.getCount(mailBox));
-//		request.setAttribute("mailPage", mailPage);
 		// 默认风格
 		String indexStyle = "default";
 		Cookie[] cookies = request.getCookies();
@@ -255,7 +212,24 @@ public class LoginController extends BaseController{
 			return "modules/sys/sysIndex-ace";
 		}
 		
+		User user = UserUtils.getUser();
+		if(user.getType()==1){
+			return "modules/sys/sysIndex";
+		}else if(user.getType()==2){
+			model.addAttribute("user", user);
+			return "modules/sys/studentForm";
+		}else if(user.getType()==3){
+			return "redirect:" + adminPath+"/sellerPath";
+		}
 		return "modules/sys/sysIndex";
+	}
+	
+	@RequiresPermissions("user")
+	@RequestMapping(value = "${adminPath}/studentPath")
+	public String studentPath(Model model){
+		User user = UserUtils.getUser();
+		model.addAttribute("user", user);
+		return "mudules/platform/studentForm";
 	}
 	
 	/**

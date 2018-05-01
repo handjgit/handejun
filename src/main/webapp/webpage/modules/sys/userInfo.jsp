@@ -157,34 +157,34 @@
 													<td><strong>姓名</strong></td>
 													<td>${user.name}</td>
 												</tr>
-												<tr>
+												<%-- <tr>
 													<td><strong>邮箱</strong></td>
 													<td>${user.email}</td>
-												</tr>
-												<tr>
+												</tr> --%>
+												<%-- <tr>
 													<td><strong>手机</strong></td>
 													<td>${user.mobile}</td>
-												</tr>
+												</tr> --%>
 												<tr>
 													<td><strong>电话</strong></td>
 													<td>${user.phone}</td>
 												</tr>
-												<tr>
+											<%-- 	<tr>
 													<td><strong>公司</strong></td>
 													<td>${user.company.name}</td>
+												</tr> --%>
+												<tr>
+													<td><strong>状态</strong></td>
+													<td>${user.status}</td>
 												</tr>
 												<tr>
-													<td><strong>部门</strong></td>
-													<td>${user.office.name}</td>
-												</tr>
-												<tr>
-													<td><strong>备注</strong></td>
-													<td>${user.remarks}</td>
+													<td><strong>用户类型</strong></td>
+													<td>${user.type}</td>
 												</tr>
 											</tbody>
 										</table>
-										<strong>上次登录</strong>
-													IP: ${user.oldLoginIp}&nbsp;&nbsp;&nbsp;&nbsp;时间：<fmt:formatDate value="${user.oldLoginDate}" type="both" dateStyle="full"/>
+										<%-- <strong>上次登录</strong>
+													IP: ${user.oldLoginIp}&nbsp;&nbsp;&nbsp;&nbsp;时间：<fmt:formatDate value="${user.oldLoginDate}" type="both" dateStyle="full"/> --%>
 											
 									</div>
 								</div>
@@ -216,28 +216,28 @@
 											<tbody>
 												<tr>
 													<td><strong>用户名</strong></td>
-													<td>${user.loginName}</td>
+													<td>${user.name}</td>
 												</tr>
 												<tr>
 													<td><strong>注册手机号码</strong></td>
-													<td>${user.mobile}</td>
+													<td>${user.phone}</td>
 												</tr>
-												<tr>
+												<%-- <tr>
 													<td><strong>用户角色</strong></td>
 													<td>${user.roleNames}</td>
-												</tr>
+												</tr> --%>
 												<tr>
 													<td><strong>用户类型</strong></td>
-													<td>${fns:getDictLabel(user.userType, 'sys_user_type', '无')}</td>
+													<td>${fns:getDictLabel(user.type, 'sys_user_type', '无')}</td>
 												</tr>
 											</tbody>
 										</table>
 									</div>
 								
 								</div>
-								<div class="col-sm-4">
+								<%-- <div class="col-sm-4">
 									<img width="100%" style="max-width:264px;" src="${user.qrCode}">
-								</div>
+								</div> --%>
 							</div>
 						</div>
 					</div>

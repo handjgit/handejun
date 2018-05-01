@@ -16,24 +16,12 @@
 
     <script type="text/javascript">
 	$(document).ready(function() {
-		 if('${fns:getDictLabel(cookie.theme.value,"theme","默认主题")}' == '天蓝主题'){
-			    // 蓝色主题
-			        $("body").removeClass("skin-2");
-			        $("body").removeClass("skin-3");
-			        $("body").addClass("skin-1");
-		 }else  if('${fns:getDictLabel(cookie.theme.value,"theme","默认主题")}' == '橙色主题'){
-			    // 黄色主题
-			        $("body").removeClass("skin-1");
-			        $("body").removeClass("skin-2");
-			        $("body").addClass("skin-3");
-		 }else {
-			 // 默认主题
-			        $("body").removeClass("skin-2");
-			        $("body").removeClass("skin-3");
-			        $("body").removeClass("skin-1");
-		 };
-	 });
-			
+		
+		    // 蓝色主题
+	        $("body").removeClass("skin-2");
+	        $("body").removeClass("skin-3");
+	        $("body").addClass("skin-1");
+	
 	</script>
 
 </head>
@@ -136,67 +124,7 @@
                         </li>
                       
                       <!-- 国际化功能预留接口 -->
-                        <li class="dropdown">
-							<a id="lang-switch" class="lang-selector dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="true">
-								<span class="lang-selected">
-										<img  class="lang-flag" src="${ctxStatic}/common/img/china.png" alt="中国">
-										<span class="lang-id">中国</span>
-										<span class="lang-name">中文</span>
-									</span>
-							</a>
-
-							<!--Language selector menu-->
-							<ul class="head-list dropdown-menu with-arrow">
-								<li>
-									<!--English-->
-									<a class="lang-select">
-										<img class="lang-flag" src="${ctxStatic}/common/img/china.png" alt="中国">
-										<span class="lang-id">中国</span>
-										<span class="lang-name">中文</span>
-									</a>
-								</li>
-								<li>
-									<!--English-->
-									<a class="lang-select">
-										<img class="lang-flag" src="${ctxStatic}/common/img/united-kingdom.png" alt="English">
-										<span class="lang-id">EN</span>
-										<span class="lang-name">English</span>
-									</a>
-								</li>
-								<li>
-									<!--France-->
-									<a class="lang-select">
-										<img class="lang-flag" src="${ctxStatic}/common/img/france.png" alt="France">
-										<span class="lang-id">FR</span>
-										<span class="lang-name">Français</span>
-									</a>
-								</li>
-								<li>
-									<!--Germany-->
-									<a class="lang-select">
-										<img class="lang-flag" src="${ctxStatic}/common/img/germany.png" alt="Germany">
-										<span class="lang-id">DE</span>
-										<span class="lang-name">Deutsch</span>
-									</a>
-								</li>
-								<li>
-									<!--Italy-->
-									<a class="lang-select">
-										<img class="lang-flag" src="${ctxStatic}/common/img/italy.png" alt="Italy">
-										<span class="lang-id">IT</span>
-										<span class="lang-name">Italiano</span>
-									</a>
-								</li>
-								<li>
-									<!--Spain-->
-									<a class="lang-select">
-										<img class="lang-flag" src="${ctxStatic}/common/img/spain.png" alt="Spain">
-										<span class="lang-id">ES</span>
-										<span class="lang-name">Español</span>
-									</a>
-								</li>
-							</ul>
-						</li>
+                        
                     </ul>
                 </nav>
             </div>
@@ -205,7 +133,7 @@
                 </button>
                 <nav class="page-tabs J_menuTabs">
                     <div class="page-tabs-content">
-                        <a href="#" class="active J_menuTab" data-id="${ctx}/sys/user/info">个人资料</a>
+                        <a href="#" class="active J_menuTab" data-id="${ctx}/platform/tuser/studentForm?id=${user.id}">个人资料</a>
                     </div>
                 </nav> 
                 <button class="roll-nav roll-right J_tabRight"><i class="fa fa-forward"></i>
@@ -227,7 +155,7 @@
                 <a href="${ctx}/logout" class="roll-nav roll-right J_tabExit"><i class="fa fa fa-sign-out"></i> 退出</a>
             </div>
             <div class="row J_mainContent" id="content-main">
-                <iframe class="J_iframe" name="iframe0" width="100%" height="100%" src="${ctx }/sys/user/info" frameborder="0" data-id="${ctx }/sys/user/info" seamless></iframe>
+                <iframe class="J_iframe" name="iframe0" width="100%" height="100%" src="${ctx}/platform/tuser/studentForm?id=${user.id}" frameborder="0" data-id="${ctx}/platform/tuser/studentForm?id=${user.id}" seamless></iframe>
             </div>
             <div class="footer">
                 <div class="pull-left"><a href="http://www.jeeplus.org">http://www.jeeplus.org</a> &copy; 2015-2025</div>

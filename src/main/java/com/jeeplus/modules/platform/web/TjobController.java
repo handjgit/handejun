@@ -60,6 +60,26 @@ public class TjobController extends BaseController {
 	/**
 	 * 职位发布列表页面
 	 */
+	@RequestMapping(value ="jobs")
+	public String jobs(Tjob tjob, HttpServletRequest request, HttpServletResponse response, Model model) {
+		tjob.setStatus(1);
+		Page<Tjob> page = tjobService.findPage(new Page<Tjob>(request, response), tjob); 
+		model.addAttribute("page", page);
+		return "modules/platform/jobs";
+	}
+	
+	/**
+	 * 查看，增加，编辑职位发布表单页面
+	 */
+	@RequestMapping(value = "view")
+	public String view(Tjob tjob, Model model) {
+		model.addAttribute("tjob", tjob);
+		return "modules/platform/tjobForm";
+	}
+	
+	/**
+	 * 职位发布列表页面
+	 */
 	@RequiresPermissions("platform:tjob:list")
 	@RequestMapping(value = {"list", ""})
 	public String list(Tjob tjob, HttpServletRequest request, HttpServletResponse response, Model model) {
